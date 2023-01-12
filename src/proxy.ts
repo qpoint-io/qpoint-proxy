@@ -1,22 +1,26 @@
 import { Context } from "@qpoint/router"
+import { replaceUrl } from "./url"
 
 export interface ProxyOpts {
-  basePath?: string
+  redirect?: boolean
+  urlStrategy?: string
 }
 
 export async function proxyRequest(url: string, context: Context, opts: ProxyOpts = {}) {
   // extract the opts
-  const { basePath = '' } = opts
+  const { 
+    redirect = false, 
+    urlStrategy = 'mask'
+  } = opts
 
-  // extract the edge URL
-  let { origin } = new URL(context.url)
+  // assemble the src (app) url
+  const srcUrl = replaceUrl(context.request.url, url, urlStrategy)
 
-  // remove the trailing slash
-  if (origin.endsWith('/'))
-    origin = origin.slice(0, -1)
-
-  // rebase the URL
-  const srcUrl = context.request.url.replace(`${origin}${basePath}`, url)
+  // is this a redirect?
+  if (redirect) {
+    context.response = Response.redirect(srcUrl, 302)
+    return
+  }
 
   // build a new proxy request with a new url
   context.proxy = new Request(srcUrl, context.proxy)
