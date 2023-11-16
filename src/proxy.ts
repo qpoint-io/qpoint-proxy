@@ -61,7 +61,11 @@ export async function proxyRequest(url: string, context: Context, opts: ProxyOpt
   const start = Date.now()
 
   // fetch response from upstream app
-  context.response = await fetch(context.proxy)
+  try {
+    context.response = await fetch(context.proxy);
+  } catch (err) {
+    context.response = new Response(err.message, { status: 502 });
+  }
 
   // create a stop timer
   const stop = Date.now()
