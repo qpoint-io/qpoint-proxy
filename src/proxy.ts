@@ -60,9 +60,12 @@ export async function proxyRequest(url: string, context: Context, opts: ProxyOpt
   // create a start timer
   const start = Date.now()
 
+  // copy the proxy request in case anything needs to read the body later (reporting, etc)
+  const proxy = context.proxy.clone();
+
   // fetch response from upstream app
   try {
-    context.response = await fetch(context.proxy);
+    context.response = await fetch(proxy);
   } catch (err) {
     context.response = new Response(err.message, { status: 502 });
   }
