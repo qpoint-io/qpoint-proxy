@@ -1,6 +1,6 @@
 {
   "name": "@qpoint/proxy",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "A Qpoint adapter for proxying requests from the edge",
   "author": "Tyler Flint <tyler@qpoint.io>",
   "homepage": "https://github.com/qpoint-io/qpoint-proxy",
@@ -18,7 +18,8 @@
     "release": "npm publish --access=public"
   },
   "dependencies": {
-    "@qpoint/router": "^0.1.12"
+    "@qpoint/router": "^0.2.0",
+    "forwarded-parse": "^2.1.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.5.1",
