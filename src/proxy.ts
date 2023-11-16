@@ -14,17 +14,29 @@ export async function proxyRequest(url: string, context: Context, opts: ProxyOpt
     urlStrategy = 'mask'
   } = opts
 
+  // log if debug mode
+  const debug = (msg: string) => {
+    if (context.state['proxy.debug'])
+      context.log(`proxy: ${msg}`)
+  }
+
   // if the client is requesting a scheme, let's ensure we're matching it
   if (context.req.headers.has('Forwarded')) {
     try {
       // extract the header
       const forward = context.req.headers.get('Forwarded');
 
+      // debug
+      debug(`Forwarded header found: ${forward}`);
+
       // parse all the forwarded entries
       const records = parseForwarded(forward);
 
       // grab the proto if it's set
       const proto = records.find(item => item.proto)?.proto;
+
+      // debug
+      debug(`Forwarded proto requested: ${proto}`);
 
       // parse url
       let parsedUrl = new URL(url);
@@ -34,11 +46,18 @@ export async function proxyRequest(url: string, context: Context, opts: ProxyOpt
         // set the scheme
         parsedUrl.protocol = proto;
 
+        // debug
+        debug(`previous url: ${url}`);
+
         // update the url
         url = parsedUrl.toString();
+
+        // debug
+        debug(`new url: ${url}`);
       }
     } catch (err) {
       // nothing to do, the proxy/client has a malformed Forward
+      debug(`failed to parse Forwarded header: ${err.message}`);
     }
   }
 
