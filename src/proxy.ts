@@ -13,6 +13,21 @@ export async function proxyRequest(url: string, context: Context, opts: ProxyOpt
     urlStrategy = 'mask'
   } = opts
 
+  // if the client is requesting a scheme, let's ensure we're matching it
+  if (context.req.headers.has('X-Forward-Scheme')) {
+    // extract the forward schema from the headers
+    const scheme = context.req.headers.get('X-Forward-Scheme');
+    
+    // parse url
+    let parsedUrl = new URL(url);
+
+    // set the scheme
+    parsedUrl.protocol = scheme;
+
+    // update the url
+    url = parsedUrl.toString();
+  }
+
   // assemble the src (app) url
   const srcUrl = replaceUrl(context.request.url, url, urlStrategy)
 
