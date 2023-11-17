@@ -1,6 +1,6 @@
 import { Context } from "@qpoint/router"
 import { replaceUrl } from "./url"
-import parseForwarded from 'forwarded-parse'
+import { parseForwarded } from "./parse"
 
 export interface ProxyOpts {
   redirect?: boolean
