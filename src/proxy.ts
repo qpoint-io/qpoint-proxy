@@ -84,7 +84,7 @@ export async function proxyRequest(url: string, context: Context, opts: ProxyOpt
 
   // fetch response from upstream app
   try {
-    context.response = await fetch(proxy);
+    context.response = await fetch(proxy, { redirect: 'manual' });
   } catch (err) {
     context.response = new Response(err.message, { status: 502 });
   }
