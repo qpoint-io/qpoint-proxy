@@ -1,4 +1,3 @@
-import { serve } from "https://deno.land/std@0.157.0/http/server.ts";
 import worker from "../simple/src/index.ts";
 import "https://deno.land/x/html_rewriter@v0.1.0-pre.17/polyfill-base64.ts";
 
@@ -12,6 +11,7 @@ const ctx = {
   passThroughOnException: () => {}
 };
 
-serve((req: Request) => (
+// start the http server
+Deno.serve((req: Request) => (
   worker.fetch(req, bindings, ctx)
 ));
