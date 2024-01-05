@@ -1,7 +1,7 @@
 {
   "imports": {
     "$std/": "https://deno.land/std@0.150.0/",
-    "@qpoint/router": "https://esm.sh/@qpoint/router@0.2.1?bundle",
+    "@qpoint/endpoint": "https://esm.sh/@qpoint/endpoint@0.0.1?bundle",
     "@qpoint/mask-urls": "https://esm.sh/@qpoint/mask-urls@0.1.3?bundle",
     "@qpoint/rewrite-html": "https://esm.sh/@qpoint/rewrite-html@0.1.2?bundle",
     "@qpoint/proxy": "../../dist/index.js"
