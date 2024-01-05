@@ -5,10 +5,10 @@ A Qpoint adapter for proxying requests from the edge
 ## Usage
 
 ```ts
-import Router from "@qpoint/router";
+import Endpoint from "@qpoint/endpoint";
 import proxy from "@qpoint/proxy";
 
-export default new Router()
+export default new Endpoint()
   .use(proxy({ appUrl: "https://qpoint.io" }))
 ```
 

@@ -1,4 +1,4 @@
-import { Context } from "@qpoint/router"
+import { Context } from "@qpoint/endpoint"
 import { replaceUrl } from "./url"
 import { parseForwarded } from "./parse"
 
@@ -9,8 +9,8 @@ export interface ProxyOpts {
 
 export async function proxyRequest(url: string, context: Context, opts: ProxyOpts = {}) {
   // extract the opts
-  const { 
-    redirect = false, 
+  const {
+    redirect = false,
     urlStrategy = 'mask'
   } = opts
 
